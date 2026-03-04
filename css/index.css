@@ -53,6 +53,10 @@ section{
     padding-bottom: 25px;
 }
 
+#hiring{
+    border-top: 1px solid #7C7F88;
+}
+
     /* [2.1] Section Grid Layout */
     /* WORK IN PROGRESS TO-DO */
     .cat-grid{
@@ -61,3 +65,4 @@ section{
         gap: 20px;
         margin-top: 20px;
     }
+
