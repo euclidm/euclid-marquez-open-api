@@ -1,0 +1,63 @@
+/* [0] Global Style */
+h1{ font-family: 'Gamja Flower', sans-serif; font-size: 64px; }
+
+h2{ font-family: 'Gamja Flower', sans-serif; font-size: 32px; text-align: center;}
+
+h3{ font-family: 'Fredoka', sans-serif; font-size: 24px; font-weight: 400; }
+
+body{
+    background-color: #E9E9E7;
+    color: #565962;
+    font-family: 'Fredoka', sans-serif;
+    padding-top: 50px;
+}
+
+/* [1] Navigation Layout & Components */
+nav{
+    font-family: 'Gamja Flower', sans-serif;
+
+    max-width: 600px;
+    margin: 50px auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #787b86;
+    border-radius: 20px;
+}
+
+nav a{
+    text-decoration: none;
+    color:#E9E9E7
+}
+
+.nav-container{
+    display: flex;
+    gap: 50px;
+    padding: 5px 20px;
+}
+
+header{
+    text-align: center;
+}
+
+header h3{
+    color: #888c97;
+}
+
+/* [2] Section Layout & Components */
+section{
+    max-width: 1000px;
+    margin: 20px auto;
+    padding-bottom: 25px;
+}
+
+    /* [2.1] Section Grid Layout */
+    /* WORK IN PROGRESS TO-DO */
+    .cat-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
