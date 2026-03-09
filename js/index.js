@@ -42,6 +42,77 @@ const roleList = {
     ],
 };
 
+// Hiring Board
+const hiringList = [
+    {catRole: "Paw-designer Intern", realRole: "Graphic Designer Intern"},
+    {catRole: "Meowketing Intern", realRole: "Marketing Intern"},
+    {catRole: "Paw-ject Coordinator Intern", realRole: "Project Coordinator Intern"},
+    {catRole: "Paw-shop Coordinator Intern", realRole: "Workshop Coordinator Intern"},
+    {catRole: "Meow-ship Coordinator Intern", realRole: "Mentorship Coordinator Intern"}
+]
+
+// [1] Functions
+
+// [1.1] CatCardCreator
+function createCard({catName, catRole, realRole, imgURL, catBreed, catOrigin}){
+    const catCard = document.createElement("div");
+    catCard.className = "cat-card";
+    
+    catCard.innerHTML = `
+        <img class="cat-img" src="${imgURL}" alt="Cat Club Officer Image">
+        <h3 class="cat-name">${catName}</h3>
+        <p class="cat-role">${catRole}</p>
+        <p class="real-role">${realRole}</p>
+        <p class="cat-breed">Breed: ${catBreed}</p>
+        <p class="cat-origin">Origin: ${catOrigin}</p>
+    `;
+
+    return catCard;
+};
+
+// [2] Use TheCatAPI Fetch Image > Creates Cat Card for each Club Member
+
+fetch(`${API_URL}images/search?limit=${20}&has_breeds=1`, {headers: {"x-api-key": API_KEY}})
+
+.then(function(response){
+    return response.json();
+})
+
+.then(function(data){
+    console.log("TheCatAPI (Img) Response: ", data);
+
+    let catIndex = 0;
+
+    Object.keys(roleList).forEach(sectionIndex => {
+
+        roleList[sectionIndex].forEach(roleIndex => {
+            
+            const cat = data[catIndex];
+            const catBreed = cat.breeds?.[0];
+
+            // [2.1] Card Creator
+            const catCard = createCard({
+                catName: catOfficers[catIndex % catOfficers.length],
+                catRole: roleIndex.catRole,
+                realRole: roleIndex.realRole,
+                imgURL: cat.url,
+                catBreed: catBreed?.name,
+                catOrigin: catBreed?.origin
+            });
+
+            section_grids[sectionIndex].append(catCard);
+
+            catIndex++;
+        })
+    });
+})
+
+.catch(function(error){
+    console.error("Error fetching TheCatAPI (Imgs) data: ", error);
+});
+
+
+
 // [1] TheCatAPI Fetch Breeds
 fetch(`${API_URL}breeds`, {headers: {"x-api-key": API_KEY}})
 
@@ -57,22 +128,3 @@ fetch(`${API_URL}breeds`, {headers: {"x-api-key": API_KEY}})
     console.error("Error fetching TheCatAPI (Breed) data: ", error);
 });
 
-// [2] TheCatAPI Fetch Images
-fetch(`${API_URL}images/search?limit=${12}&has_breeds=1`, {headers: {"x-api-key": API_KEY}})
-
-.then(function(response){
-    return response.json();
-})
-
-.then(function(data){
-    console.log("TheCatAPI (Imgs) Response: ", data);
-
-    data.forEach((cat, index) => {
-        const cat_breed = cat.breeds?.[0];
-        console.log(`Cat #${index + 1}: `, "Breed - ", cat_breed?.name, " Origin - ", cat_breed?.origin, " Image - ", cat?.url);
-    })
-})
-
-.catch(function(error){
-    console.error("Error fetching TheCatAPI (Imgs) data: ", error);
-});
