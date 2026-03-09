@@ -111,9 +111,7 @@ fetch(`${API_URL}images/search?limit=${20}&has_breeds=1`, {headers: {"x-api-key"
     console.error("Error fetching TheCatAPI (Imgs) data: ", error);
 });
 
-
-
-// [1] TheCatAPI Fetch Breeds
+// [3] Use TheCatAPI Fetch Breeds > Add info list of the type of breed/origin of Cats that we're hiring as interns
 fetch(`${API_URL}breeds`, {headers: {"x-api-key": API_KEY}})
 
 .then(function(response){
@@ -122,6 +120,23 @@ fetch(`${API_URL}breeds`, {headers: {"x-api-key": API_KEY}})
 
 .then(function(data){
     console.log("TheCatAPI (Breed) Response: ", data);
+
+    hiringList.forEach(function(role){
+        // [3.1] Random Cat Generator
+        const newCat = data[Math.floor(Math.random() * data.length)];
+
+        // [3.2] Card Creator
+        const hiringCard = createCard({
+            catName: "Now Hiring!",
+            catRole: role.catRole,
+            realRole: role.realRole,
+            imgURL:  "https://helios-i.mashable.com/imagery/articles/00wbdftfOy2DpCwzab387kC/hero-image.fill.size_1200x1200.v1694035762.jpg",
+            catBreed: newCat.name,
+            catOrigin: newCat.origin
+        })
+
+        section_grids.hiring.append(hiringCard);
+    });
 })
 
 .catch(function(error){
